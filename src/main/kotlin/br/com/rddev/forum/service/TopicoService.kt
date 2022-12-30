@@ -1,6 +1,6 @@
 package br.com.rddev.forum.service
 
-import br.com.rddev.forum.dto.NovoTopicoDto
+import br.com.rddev.forum.dto.NovoTopicoForm
 import br.com.rddev.forum.dto.TopicoView
 import br.com.rddev.forum.model.Topico
 import org.springframework.stereotype.Service
@@ -37,7 +37,7 @@ class TopicoService(
         )
     }
 
-    fun cadastrar(dto: NovoTopicoDto) {
+    fun cadastrar(dto: NovoTopicoForm) {
         val topico = Topico(
             id = topicos.size + 1L,
             titulo = dto.titulo,
