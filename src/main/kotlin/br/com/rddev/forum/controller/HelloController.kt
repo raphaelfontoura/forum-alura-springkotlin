@@ -1,4 +1,4 @@
-package br.com.rddev.forum
+package br.com.rddev.forum.controller
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

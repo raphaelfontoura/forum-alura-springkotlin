@@ -1,0 +1,3 @@
+### Get Topicos List
+GET http://localhost:8080/topicos
+Content-Type: application/json
