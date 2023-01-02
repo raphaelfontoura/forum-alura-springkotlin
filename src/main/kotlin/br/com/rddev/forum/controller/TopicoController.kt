@@ -3,7 +3,6 @@ package br.com.rddev.forum.controller
 import br.com.rddev.forum.service.TopicoService
 import br.com.rddev.forum.dto.NovoTopicoForm
 import br.com.rddev.forum.dto.TopicoView
-import br.com.rddev.forum.model.Topico
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping

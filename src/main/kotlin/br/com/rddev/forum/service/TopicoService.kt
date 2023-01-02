@@ -2,25 +2,22 @@ package br.com.rddev.forum.service
 
 import br.com.rddev.forum.dto.NovoTopicoForm
 import br.com.rddev.forum.dto.TopicoView
+import br.com.rddev.forum.mapper.Mapper
+import br.com.rddev.forum.mapper.TopicoFormMapper
+import br.com.rddev.forum.mapper.TopicoViewMapper
 import br.com.rddev.forum.model.Topico
 import org.springframework.stereotype.Service
 
 @Service
 class TopicoService(
     private var topicos: List<Topico> = emptyList(),
-    private val cursoService: CursoService,
-    private val usuarioService: UsuarioService
+    private val topicoViewMapper: TopicoViewMapper,
+    private val topicoFormMapper: TopicoFormMapper
 ) {
 
     fun listar(): List<TopicoView> {
         return topicos.map { topico ->
-            TopicoView(
-                id = topico.id,
-                titulo = topico.mensagem,
-                mensagem = topico.mensagem,
-                status = topico.status,
-                dataCriacao = topico.dataCriacao
-            )
+            topicoViewMapper.map(topico)
         }
     }
 
@@ -28,23 +25,12 @@ class TopicoService(
         val topico = topicos
             .first { topico -> topico.id == id }
 
-        return TopicoView(
-            id = topico.id,
-            titulo = topico.mensagem,
-            mensagem = topico.mensagem,
-            status = topico.status,
-            dataCriacao = topico.dataCriacao
-        )
+        return topicoViewMapper.map(topico)
     }
 
-    fun cadastrar(dto: NovoTopicoForm) {
-        val topico = Topico(
-            id = topicos.size + 1L,
-            titulo = dto.titulo,
-            mensagem = dto.mensagem,
-            curso = cursoService.buscarPorId(dto.idCurso),
-            autor = usuarioService.buscarPorId(dto.idAutor)
-        )
+    fun cadastrar(form: NovoTopicoForm) {
+        val topico = topicoFormMapper.map(form)
+        topico.id = topicos.size + 1L
         topicos = topicos.plus(topico)
     }
 }
