@@ -1,5 +1,6 @@
 package br.com.rddev.forum.service
 
+import br.com.rddev.forum.dto.AtualizacaoTopicoForm
 import br.com.rddev.forum.dto.NovoTopicoForm
 import br.com.rddev.forum.dto.TopicoView
 import br.com.rddev.forum.mapper.Mapper
@@ -32,5 +33,25 @@ class TopicoService(
         val topico = topicoFormMapper.map(form)
         topico.id = topicos.size + 1L
         topicos = topicos.plus(topico)
+    }
+
+    fun atualizar(form: AtualizacaoTopicoForm) {
+        val topico = topicos.stream().filter { t->
+            t.id == form.id
+        }.findFirst().get()
+
+        topicos = topicos.minus(topico).plus(
+            Topico(
+                id = form.id,
+                titulo = form.titulo,
+                mensagem = form.mensagem,
+                autor = topico.autor,
+                curso = topico.curso,
+                respostas = topico.respostas,
+                status = topico.status,
+                dataCriacao = topico.dataCriacao
+            )
+        )
+
     }
 }
