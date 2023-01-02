@@ -6,7 +6,8 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 data class NovoTopicoForm(
-    @field:NotEmpty @field:Size(min = 3, max = 100)
+    @field:NotEmpty(message = "Título não pode estar vazio")
+    @field:Size(min = 3, max = 100, message = "Título deve ter entre 3 e 100 caracteres")
     val titulo: String,
     //data class necessário @field para assumir na construção
     // a anotação vai para o parâmetro do construtor em vez do atributo.
