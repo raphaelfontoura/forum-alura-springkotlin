@@ -8,24 +8,29 @@ import br.com.rddev.forum.exception.NotFoundException
 import br.com.rddev.forum.mapper.Mapper
 import br.com.rddev.forum.mapper.TopicoFormMapper
 import br.com.rddev.forum.mapper.TopicoViewMapper
+import br.com.rddev.forum.model.Curso
 import br.com.rddev.forum.model.Topico
 import br.com.rddev.forum.repository.TopicoRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import javax.persistence.EntityManager
 
 @Service
 class TopicoService(
     private val repository: TopicoRepository,
     private val topicoViewMapper: TopicoViewMapper,
     private val topicoFormMapper: TopicoFormMapper,
-    private val notFoundMessage: String = "Tópico não encontrado"
+    private val notFoundMessage: String = "Tópico não encontrado",
+    private val em: EntityManager
 ) {
 
     fun listar(
         nomeCurso: String?,
         paginacao: Pageable
     ): Page<TopicoView> {
+        val find = em.find(Curso::class.java, 1L)
+        println(find)
         val topicos = if (nomeCurso == null) {
             repository.findAll(paginacao)
         } else {
