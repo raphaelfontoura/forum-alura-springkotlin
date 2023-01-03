@@ -1,29 +1,17 @@
 package br.com.rddev.forum.service
 
+import br.com.rddev.forum.exception.NotFoundException
 import br.com.rddev.forum.model.Curso
+import br.com.rddev.forum.repository.CursoRepository
+import br.com.rddev.forum.repository.UsuarioRepository
 import org.springframework.stereotype.Service
 
 @Service
 class CursoService(
-    private var cursos: List<Curso>
+    private val repository: CursoRepository
 ) {
 
-    init {
-        cursos = listOf(
-            Curso(
-                id = 1,
-                nome = "Kotlin",
-                categoria = "Programação"
-            ),
-            Curso(
-                id = 2,
-                nome = "Java",
-                categoria = "Programação"
-            )
-        )
-    }
-
     fun buscarPorId(id: Long): Curso {
-        return cursos.first {curso -> curso.id == id}
+        return repository.findById(id).orElseThrow {NotFoundException("Curso não encontrado.")}
     }
 }
