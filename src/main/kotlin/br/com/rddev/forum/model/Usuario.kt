@@ -1,5 +1,6 @@
 package br.com.rddev.forum.model
 
+import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -10,5 +11,6 @@ data class Usuario(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     val nome: String,
-    val email: String
+    val email: String,
+    val password: String
 )
