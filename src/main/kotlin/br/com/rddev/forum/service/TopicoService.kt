@@ -2,6 +2,7 @@ package br.com.rddev.forum.service
 
 import br.com.rddev.forum.dto.AtualizacaoTopicoForm
 import br.com.rddev.forum.dto.NovoTopicoForm
+import br.com.rddev.forum.dto.TopicoPorCategoriaDto
 import br.com.rddev.forum.dto.TopicoView
 import br.com.rddev.forum.exception.NotFoundException
 import br.com.rddev.forum.mapper.Mapper
@@ -60,5 +61,9 @@ class TopicoService(
 
     fun deletar(id: Long) {
         repository.deleteById(id)
+    }
+
+    fun relatorio(): List<TopicoPorCategoriaDto> {
+        return repository.relatorio()
     }
 }

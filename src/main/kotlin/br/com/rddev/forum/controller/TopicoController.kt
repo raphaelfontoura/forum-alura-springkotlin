@@ -3,6 +3,7 @@ package br.com.rddev.forum.controller
 import br.com.rddev.forum.dto.AtualizacaoTopicoForm
 import br.com.rddev.forum.service.TopicoService
 import br.com.rddev.forum.dto.NovoTopicoForm
+import br.com.rddev.forum.dto.TopicoPorCategoriaDto
 import br.com.rddev.forum.dto.TopicoView
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
@@ -73,5 +74,10 @@ class TopicoController(private val service: TopicoService) {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deletar(@PathVariable id: Long) {
         service.deletar(id)
+    }
+
+    @GetMapping("/relatorio")
+    fun relatorio(): ResponseEntity<List<TopicoPorCategoriaDto>> {
+        return ResponseEntity.ok(service.relatorio())
     }
 }
