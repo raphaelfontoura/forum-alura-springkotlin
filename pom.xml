@@ -76,6 +76,10 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
@@ -131,6 +135,12 @@
 			<id>prod</id>
 			<properties>
 				<activatedProperties>prod</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<activatedProperties>local</activatedProperties>
 			</properties>
 		</profile>
 	</profiles>

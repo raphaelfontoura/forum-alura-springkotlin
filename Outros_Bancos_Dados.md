@@ -28,3 +28,28 @@ spring:
 ```
 
 Lembrando de substituir o username e password de acordo com as configurações de seu MySQL.
+
+
+----
+
+Subindo o mysql com docker:
+```bash
+$ docker pull mysql:8.0.31
+
+$ docker run -d -p 3306:3306 --name mysql-container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_PASSWORD=root mysql:8.0.31
+```
+
+Criando o banco forum
+```bash
+$ docker exec -it mysql-container bash
+```
+
+Dentro do bash o mysql-container
+```bash
+bash# mysql -u root -p
+Enter password:
+
+mysql> create database forum;
+
+```
+
