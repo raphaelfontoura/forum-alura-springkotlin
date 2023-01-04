@@ -3,12 +3,14 @@ package br.com.rddev.forum.service
 import br.com.rddev.forum.exception.NotFoundException
 import br.com.rddev.forum.mapper.TopicoFormMapper
 import br.com.rddev.forum.mapper.TopicoViewMapper
+import br.com.rddev.forum.model.Topico
 import br.com.rddev.forum.model.TopicoTest
 import br.com.rddev.forum.model.TopicoViewTest
 import br.com.rddev.forum.repository.TopicoRepository
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
@@ -68,10 +70,15 @@ class TopicoServiceTest {
     @Test
     fun `deve retornar um Topico quando topico for achado`() {
         val topico = TopicoTest.build()
+        val slot = slot<Topico>()
         every { topicoRepository.findById(1L) } returns Optional.of(topico)
+        every { topicoViewMapper.map(capture(slot)) } returns TopicoViewTest.build()
 
         val result = topicoService.buscarPorId(1L)
 
         assertThat(result.titulo).isEqualTo(topico.titulo)
+        assertThat(slot.captured.titulo).isEqualTo(topico.titulo)
+        assertThat(slot.captured.mensagem).isEqualTo(topico.mensagem)
+        assertThat(slot.captured.status).isEqualTo(topico.status)
     }
 }
