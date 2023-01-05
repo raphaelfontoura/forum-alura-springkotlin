@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -32,6 +33,10 @@ class SecurityConfiguration(
         http?.addFilterBefore(JWTLoginFilter(authManager = authenticationManager(), jwtUtil = jwtUtil), UsernamePasswordAuthenticationFilter().javaClass)
         http?.addFilterBefore(JwtAuthenticationFilter(jwtUtil= jwtUtil), UsernamePasswordAuthenticationFilter().javaClass)
         http?.sessionManagement()?.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    }
+
+    override fun configure(web: WebSecurity?) {
+        web?.ignoring()?.antMatchers("/swagger-ui/**", "/v3/api-docs/**")
     }
 
     @Bean
