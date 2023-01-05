@@ -5,17 +5,15 @@ import br.com.rddev.forum.dto.NovoTopicoForm
 import br.com.rddev.forum.dto.TopicoPorCategoriaDto
 import br.com.rddev.forum.dto.TopicoView
 import br.com.rddev.forum.exception.NotFoundException
-import br.com.rddev.forum.mapper.Mapper
 import br.com.rddev.forum.mapper.TopicoFormMapper
 import br.com.rddev.forum.mapper.TopicoViewMapper
-import br.com.rddev.forum.model.Curso
-import br.com.rddev.forum.model.Topico
 import br.com.rddev.forum.repository.TopicoRepository
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import javax.persistence.EntityManager
 
 @Service
 class TopicoService(
@@ -25,6 +23,7 @@ class TopicoService(
     private val notFoundMessage: String = "Tópico não encontrado"
 ) {
 
+    @Cacheable(cacheNames = ["topicos"], key = "{#root.method.name, #p0, #p1}")
     fun listar(
         nomeCurso: String?,
         paginacao: Pageable
@@ -47,12 +46,14 @@ class TopicoService(
         return topicoViewMapper.map(topico)
     }
 
+    @CacheEvict(value = ["topicos"], allEntries = true)
     fun cadastrar(form: NovoTopicoForm): TopicoView {
         val topico = topicoFormMapper.map(form)
         repository.save(topico)
         return topicoViewMapper.map(topico)
     }
 
+    @CacheEvict(value = ["topicos"], allEntries = true)
     fun atualizar(form: AtualizacaoTopicoForm): TopicoView {
         val topico = repository.findById(form.id).orElseThrow { NotFoundException(notFoundMessage) }
         topico.titulo = form.titulo
@@ -63,6 +64,7 @@ class TopicoService(
 
     }
 
+    @CacheEvict(value = ["topicos"], allEntries = true)
     fun deletar(id: Long) {
         repository.deleteById(id)
     }
