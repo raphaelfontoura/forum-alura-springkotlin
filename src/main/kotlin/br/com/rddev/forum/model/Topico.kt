@@ -16,7 +16,7 @@ data class Topico(
     @ManyToOne
     val autor: Usuario,
     @Enumerated(value = EnumType.STRING)
-    val status: StatusTopico = StatusTopico.NAO_RESPONDIDO,
+    var status: StatusTopico = StatusTopico.NAO_RESPONDIDO,
     @OneToMany(mappedBy = "topico")
     val respostas: List<Resposta> = emptyList(),
     var dataAlteracao: LocalDate? = null

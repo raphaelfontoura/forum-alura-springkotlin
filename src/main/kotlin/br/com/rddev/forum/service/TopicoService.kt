@@ -46,6 +46,10 @@ class TopicoService(
         return topicoViewMapper.map(topico)
     }
 
+    fun buscarEntidadePorId(id: Long) = repository
+        .findById(id)
+        .orElseThrow { NotFoundException(notFoundMessage) }
+
     @CacheEvict(value = ["topicos"], allEntries = true)
     fun cadastrar(form: NovoTopicoForm): TopicoView {
         val topico = topicoFormMapper.map(form)

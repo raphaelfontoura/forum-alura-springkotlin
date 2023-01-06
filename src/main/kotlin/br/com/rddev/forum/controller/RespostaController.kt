@@ -1,5 +1,6 @@
 package br.com.rddev.forum.controller
 
+import br.com.rddev.forum.dto.RespostaForm
 import br.com.rddev.forum.model.Resposta
 import br.com.rddev.forum.service.RespostaService
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
@@ -17,5 +18,5 @@ class RespostaController(
 ) {
 
     @PostMapping
-    fun salvar(@RequestBody @Valid resposta: Resposta) = respostaService.salvar(resposta)
+    fun salvar(@RequestBody @Valid resposta: RespostaForm) = respostaService.salvar(resposta)
 }
