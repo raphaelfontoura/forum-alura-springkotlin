@@ -1,5 +1,6 @@
 package br.com.rddev.forum.controller
 
+import br.com.rddev.forum.config.ContainersConfiguration
 import br.com.rddev.forum.config.JWTUtil
 import br.com.rddev.forum.model.Role
 import org.junit.jupiter.api.Test
@@ -17,10 +18,12 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import org.testcontainers.junit.jupiter.Testcontainers
 
+
+@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
-class TopicoControllerTest {
+class TopicoControllerTest : ContainersConfiguration() {
 
     @Autowired
     private lateinit var webApplicationContext: WebApplicationContext
@@ -61,7 +64,7 @@ class TopicoControllerTest {
             status { is2xxSuccessful() }
             content { contentType(MediaType.APPLICATION_JSON) }
             jsonPath("$.content") {isNotEmpty()}
-            jsonPath("$.content.length()") { value(3) }
+            jsonPath("$.content.length()") { value(1) }
         }
     }
 
