@@ -1,7 +1,7 @@
 package br.com.rddev.forum.controller
 
-import br.com.rddev.forum.config.ContainersConfiguration
 import br.com.rddev.forum.config.JWTUtil
+import br.com.rddev.forum.config.RedisContainerConfiguration
 import br.com.rddev.forum.model.Role
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -19,7 +20,8 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class TopicoControllerTest : ContainersConfiguration() {
+@ActiveProfiles("test")
+class TopicoControllerTest : RedisContainerConfiguration() {
 
     @Autowired
     private lateinit var webApplicationContext: WebApplicationContext

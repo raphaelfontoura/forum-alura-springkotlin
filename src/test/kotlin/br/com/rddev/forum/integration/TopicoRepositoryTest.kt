@@ -1,6 +1,7 @@
 package br.com.rddev.forum.integration
 
-import br.com.rddev.forum.config.ContainersConfiguration
+import br.com.rddev.forum.config.DatabaseContainersConfiguration
+import br.com.rddev.forum.config.RedisContainerConfiguration
 import br.com.rddev.forum.dto.TopicoPorCategoriaDto
 import br.com.rddev.forum.model.TopicoTest
 import br.com.rddev.forum.repository.TopicoRepository
@@ -8,12 +9,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageRequest
 import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class TopicoRepositoryTest : ContainersConfiguration() {
+class TopicoRepositoryTest : DatabaseContainersConfiguration()  {
 
     @Autowired
     private lateinit var topicoRepository: TopicoRepository
