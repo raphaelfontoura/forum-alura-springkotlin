@@ -23,6 +23,7 @@ abstract class ContainersConfiguration {
         @JvmStatic
         @DynamicPropertySource
         fun properties(registry: DynamicPropertyRegistry) {
+            registry.add("spring.datasource.driverClassName", mysqlContainer::getDriverClassName)
             registry.add("spring.datasource.url", mysqlContainer::getJdbcUrl)
             registry.add("spring.datasource.password", mysqlContainer::getPassword)
             registry.add("spring.datasource.username", mysqlContainer::getUsername)
