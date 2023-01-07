@@ -15,8 +15,8 @@ abstract class RedisContainerConfiguration {
         @JvmStatic
         @DynamicPropertySource
         fun properties(registry: DynamicPropertyRegistry) {
-            registry.add("spring.redis.host", RedisContainerConfiguration.redisContainer::getContainerIpAddress)
-            registry.add("spring.redis.port", RedisContainerConfiguration.redisContainer::getFirstMappedPort)
+            registry.add("spring.redis.host", redisContainer::getContainerIpAddress)
+            registry.add("spring.redis.port", redisContainer::getFirstMappedPort)
         }
 
     }
